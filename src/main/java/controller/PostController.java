@@ -25,7 +25,6 @@ public class PostController {
     }
 
     public void getById(long id, HttpServletResponse response) throws IOException {
-        // TODO: deserialize request & serialize response
         response.setContentType(APPLICATION_JSON);
         final var gson = new Gson();
         try {
@@ -51,12 +50,11 @@ public class PostController {
     }
 
     public void removeById(long id, HttpServletResponse response) throws IOException {
-        // TODO: deserialize request & serialize response
         response.setContentType(APPLICATION_JSON);
         final var gson = new Gson();
         try {
             service.removeById(id);
-        } catch (NotFoundException ex){
+        } catch (NotFoundException ex) {
             response.getWriter().print(gson.toJson("Несуществующий id!"));
             throw new NotFoundException();
         }
