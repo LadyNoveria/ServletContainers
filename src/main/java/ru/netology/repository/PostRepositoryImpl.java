@@ -1,5 +1,6 @@
 package ru.netology.repository;
 
+import org.springframework.stereotype.Repository;
 import ru.netology.exception.NotFoundException;
 import ru.netology.model.Post;
 
@@ -9,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
+@Repository
 public class PostRepositoryImpl implements PostRepository {
 
     private static final AtomicLong id = new AtomicLong(0);
@@ -21,9 +23,10 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     public Optional<Post> getById(long id) {
-        return posts.get(id).isEmpty()
-                ? Optional.empty()
-                : Optional.of(new Post(id, posts.get(id)));
+        String content = posts.get(id);
+        return content != null && !content.isEmpty()
+                ? Optional.of(new Post(id, content))
+                : Optional.empty();
     }
 
     public Post save(Post post) {
